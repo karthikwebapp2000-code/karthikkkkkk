@@ -8,35 +8,71 @@ All colors MUST be HSL.
 
 @layer base {
   :root {
-    --background: 0 0% 100%;
-    --foreground: 222.2 84% 4.9%;
+    /* Child-friendly color palette */
+    --background: 210 100% 97%;
+    --foreground: 215 25% 27%;
 
     --card: 0 0% 100%;
-    --card-foreground: 222.2 84% 4.9%;
+    --card-foreground: 215 25% 27%;
 
     --popover: 0 0% 100%;
-    --popover-foreground: 222.2 84% 4.9%;
+    --popover-foreground: 215 25% 27%;
 
-    --primary: 222.2 47.4% 11.2%;
-    --primary-foreground: 210 40% 98%;
+    /* Bright, engaging primary colors */
+    --primary: 220 91% 56%;
+    --primary-foreground: 0 0% 100%;
+    --primary-glow: 220 91% 70%;
 
-    --secondary: 210 40% 96.1%;
-    --secondary-foreground: 222.2 47.4% 11.2%;
+    /* Warm secondary colors */
+    --secondary: 25 95% 65%;
+    --secondary-foreground: 0 0% 100%;
 
-    --muted: 210 40% 96.1%;
-    --muted-foreground: 215.4 16.3% 46.9%;
+    /* Soft backgrounds */
+    --muted: 210 50% 95%;
+    --muted-foreground: 215 15% 50%;
 
-    --accent: 210 40% 96.1%;
-    --accent-foreground: 222.2 47.4% 11.2%;
+    /* Fun accent colors */
+    --accent: 142 86% 56%;
+    --accent-foreground: 0 0% 100%;
 
-    --destructive: 0 84.2% 60.2%;
-    --destructive-foreground: 210 40% 98%;
+    /* Success and fun colors */
+    --success: 142 86% 56%;
+    --success-foreground: 0 0% 100%;
+    
+    /* Warning colors */
+    --warning: 38 100% 60%;
+    --warning-foreground: 0 0% 100%;
 
-    --border: 214.3 31.8% 91.4%;
-    --input: 214.3 31.8% 91.4%;
-    --ring: 222.2 84% 4.9%;
+    --destructive: 0 84% 60%;
+    --destructive-foreground: 0 0% 100%;
 
-    --radius: 0.5rem;
+    /* Soft borders */
+    --border: 215 20% 85%;
+    --input: 215 20% 85%;
+    --ring: 220 91% 56%;
+
+    /* Extra rounded for child-friendly design */
+    --radius: 1rem;
+
+    /* Custom gradients for fun backgrounds */
+    --gradient-primary: linear-gradient(135deg, hsl(220 91% 56%), hsl(220 91% 70%));
+    --gradient-secondary: linear-gradient(135deg, hsl(25 95% 65%), hsl(45 95% 70%));
+    --gradient-accent: linear-gradient(135deg, hsl(142 86% 56%), hsl(160 86% 60%));
+    --gradient-rainbow: linear-gradient(90deg, 
+      hsl(0 100% 70%), 
+      hsl(60 100% 70%), 
+      hsl(120 100% 70%), 
+      hsl(180 100% 70%), 
+      hsl(240 100% 70%), 
+      hsl(300 100% 70%));
+
+    /* Soft shadows for depth */
+    --shadow-soft: 0 4px 20px -8px hsl(220 91% 56% / 0.3);
+    --shadow-glow: 0 0 30px hsl(220 91% 70% / 0.4);
+
+    /* Smooth transitions */
+    --transition-smooth: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+    --transition-bounce: all 0.4s cubic-bezier(0.68, -0.55, 0.265, 1.55);
 
     --sidebar-background: 0 0% 98%;
 
