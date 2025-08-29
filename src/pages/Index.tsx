@@ -1,11 +1,12 @@
 import { useState } from "react";
-import { LearningCard } from "@/components/LearningCard";
+import { LearningHome } from "@/components/LearningHome";
 import { AlphabetGrid } from "@/components/AlphabetGrid";
 import { TamilGrid } from "@/components/TamilGrid";
 import { ShapeGame } from "@/components/ShapeGame";
 import { Button } from "@/components/ui/button";
-import { ArrowLeft, Volume2 } from "lucide-react";
+import { ArrowLeft, Volume2, Trophy } from "lucide-react";
 import owlMascot from "@/assets/owl-mascot.png";
+import { toast } from "sonner";
 
 type LearningMode = "home" | "alphabet" | "tamil" | "shapes";
 
@@ -15,12 +16,18 @@ const Index = () => {
 
   const handleLetterClick = (letter: string) => {
     setSelectedItem(letter);
-    // In a real app, this would trigger audio pronunciation
+    // Show encouraging toast
+    toast.success(`Great choice! You selected "${letter}"`, {
+      duration: 2000,
+    });
     console.log(`Pronouncing: ${letter}`);
   };
 
   const handleShapeClick = (shape: string) => {
     setSelectedItem(shape);
+    toast.success(`Awesome! You're learning about ${shape}!`, {
+      duration: 2000,
+    });
     console.log(`Learning about: ${shape}`);
   };
 
@@ -42,21 +49,30 @@ const Index = () => {
           <img 
             src={owlMascot} 
             alt="Learning Owl Mascot" 
-            className="w-12 h-12 rounded-full"
+            className="w-12 h-12 rounded-full animate-bounce-gentle"
           />
-          <h1 className="text-3xl font-bold">
-            Learn & Play
-          </h1>
+          <div>
+            <h1 className="text-3xl font-bold">Learn & Play</h1>
+            <p className="text-sm opacity-90">Your Learning Companion</p>
+          </div>
         </div>
 
         {selectedItem && (
-          <Button
-            variant="outline"
-            className="bg-white/20 border-white/30 text-white hover:bg-white/30"
-          >
-            <Volume2 className="w-4 h-4 mr-2" />
-            Say "{selectedItem}"
-          </Button>
+          <div className="flex items-center space-x-2">
+            <Button
+              variant="outline"
+              className="bg-white/20 border-white/30 text-white hover:bg-white/30"
+            >
+              <Volume2 className="w-4 h-4 mr-2" />
+              Say "{selectedItem}"
+            </Button>
+            <Button
+              variant="outline"
+              className="bg-white/20 border-white/30 text-white hover:bg-white/30"
+            >
+              <Trophy className="w-4 h-4" />
+            </Button>
+          </div>
         )}
       </div>
     </header>
@@ -65,50 +81,7 @@ const Index = () => {
   const renderHome = () => (
     <main className="min-h-screen bg-background">
       {renderHeader()}
-      
-      <div className="max-w-6xl mx-auto p-8">
-        <div className="text-center mb-12">
-          <h2 className="text-4xl font-bold text-foreground mb-4">
-            Welcome to Your Learning Adventure! 🌟
-          </h2>
-          <p className="text-xl text-muted-foreground">
-            Choose what you'd like to learn today
-          </p>
-        </div>
-
-        <div className="grid md:grid-cols-3 gap-8">
-          <LearningCard
-            title="English Alphabet"
-            icon="🔤"
-            onClick={() => setCurrentMode("alphabet")}
-            variant="primary"
-          />
-          
-          <LearningCard
-            title="Tamil Letters"
-            icon="தமிழ்"
-            onClick={() => setCurrentMode("tamil")}
-            variant="accent"
-          />
-          
-          <LearningCard
-            title="Shapes & Words"
-            icon="🔷"
-            onClick={() => setCurrentMode("shapes")}
-            variant="secondary"
-          />
-        </div>
-
-        <div className="mt-16 text-center">
-          <div className="bg-gradient-accent rounded-2xl p-8 text-white shadow-glow">
-            <h3 className="text-2xl font-bold mb-4">Safe Learning Environment 🛡️</h3>
-            <p className="text-lg opacity-90">
-              This app is designed to be completely safe for children to use on any device. 
-              No internet required for basic learning!
-            </p>
-          </div>
-        </div>
-      </div>
+      <LearningHome onModeChange={setCurrentMode} />
     </main>
   );
 
@@ -122,7 +95,7 @@ const Index = () => {
             Learn the English Alphabet 📖
           </h2>
           <p className="text-lg text-muted-foreground">
-            Click on any letter to see and hear it!
+            Click letters to learn, then practice writing them!
           </p>
         </div>
 
@@ -153,7 +126,7 @@ const Index = () => {
             Learn Tamil Letters தமிழ் எழுத்துகள்
           </h2>
           <p className="text-lg text-muted-foreground">
-            Discover the beautiful Tamil writing system!
+            Discover the beautiful Tamil writing system with interactive practice!
           </p>
         </div>
 
