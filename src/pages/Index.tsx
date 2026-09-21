@@ -1,192 +1,170 @@
-import { useState } from "react";
-import { LearningHome } from "@/components/LearningHome";
-import { AlphabetGrid } from "@/components/AlphabetGrid";
-import { TamilGrid } from "@/components/TamilGrid";
-import { ShapeGame } from "@/components/ShapeGame";
-import { Button } from "@/components/ui/button";
-import { ArrowLeft, Volume2, Trophy } from "lucide-react";
-import owlMascot from "@/assets/owl-mascot.png";
-import { toast } from "sonner";
+import {
+  ArrowUpRight,
+  Award,
+  GraduationCap,
+  Linkedin,
+  Mail,
+  MapPin,
+  Phone,
+} from "lucide-react";
 
-type LearningMode = "home" | "alphabet" | "tamil" | "shapes";
+const skills = [
+  "SolidWorks (CSWA)",
+  "ANSYS",
+  "AutoCAD",
+  "Creo",
+  "HFSS",
+  "FEA & CFD",
+  "Additive manufacturing",
+  "Python (Basic)",
+];
 
-const Index = () => {
-  const [currentMode, setCurrentMode] = useState<LearningMode>("home");
-  const [selectedItem, setSelectedItem] = useState<string>("");
+const experience = [
+  {
+    role: "Production Officer Trainee",
+    company: "Britannia Industries",
+    period: "Jul 2026 — Aug 2026",
+    points: [
+      "Supported production-line operations while maintaining quality standards and production targets in a fast-paced FMCG environment.",
+      "Monitored process parameters and coordinated with floor supervisors to sustain continuous, efficient production flow.",
+    ],
+  },
+  {
+    role: "Machine Operator Intern",
+    company: "ATC Tires · Tirunelveli",
+    period: "Dec 2024 — Jan 2025",
+    points: [
+      "Operated industrial curing machines and monitored temperature and pressure parameters in a high-volume tire manufacturing plant.",
+      "Performed routine maintenance checks and assisted troubleshooting to reduce downtime and improve line efficiency.",
+    ],
+  },
+];
 
-  const handleLetterClick = (letter: string) => {
-    setSelectedItem(letter);
-    // Show encouraging toast
-    toast.success(`Great choice! You selected "${letter}"`, {
-      duration: 2000,
-    });
-    console.log(`Pronouncing: ${letter}`);
-  };
+const projects = [
+  {
+    title: "Composite Radome",
+    subtitle: "Structural & HFSS electromagnetic performance evaluation",
+    label: "Final year · 2025—2026",
+    description:
+      "Integrated ANSYS FEA, CFD aerodynamic analysis, and HFSS simulations to optimize radome design for structural integrity and RF signal transparency.",
+  },
+  {
+    title: "Machinery Fault Diagnosis",
+    subtitle: "Adaptive IMF filtering with machine learning",
+    label: "Academic · 2024—2025",
+    description:
+      "Applied EMD and ML-based adaptive IMF filtering to denoise vibration signals and improve rotating machinery fault-detection accuracy.",
+  },
+  {
+    title: "Saw Dust Purifier",
+    subtitle: "Water filtration system",
+    label: "Product development · 2023—2024",
+    description:
+      "Designed and prototyped a low-cost water-based saw-dust filtration system, then evaluated and refined it for scalability in woodworking units.",
+  },
+];
 
-  const handleShapeClick = (shape: string) => {
-    setSelectedItem(shape);
-    toast.success(`Awesome! You're learning about ${shape}!`, {
-      duration: 2000,
-    });
-    console.log(`Learning about: ${shape}`);
-  };
+const certifications = [
+  "SolidWorks Certified Associate (CSWA) — Dassault Systèmes",
+  "Additive Manufacturing Certification — Dassault Systèmes",
+  "Automation in Production Systems — NPTEL (Elite Grade)",
+  "Product Design and Manufacturing — NPTEL",
+  "Advanced Materials and Processes — NPTEL",
+  "Google Cybersecurity Professional Certificate — Coursera",
+];
 
-  const renderHeader = () => (
-    <header className="bg-gradient-primary text-white p-6 shadow-soft">
-      <div className="max-w-4xl mx-auto flex items-center justify-between">
-        {currentMode !== "home" && (
-          <Button
-            onClick={() => setCurrentMode("home")}
-            variant="outline"
-            className="bg-white/20 border-white/30 text-white hover:bg-white/30"
-          >
-            <ArrowLeft className="w-4 h-4 mr-2" />
-            Back Home
-          </Button>
-        )}
-        
-        <div className="flex items-center space-x-4">
-          <img 
-            src={owlMascot} 
-            alt="Learning Owl Mascot" 
-            className="w-12 h-12 rounded-full animate-bounce-gentle"
-          />
-          <div>
-            <h1 className="text-3xl font-bold">Learn & Play</h1>
-            <p className="text-sm opacity-90">Your Learning Companion</p>
-          </div>
-        </div>
-
-        {selectedItem && (
-          <div className="flex items-center space-x-2">
-            <Button
-              variant="outline"
-              className="bg-white/20 border-white/30 text-white hover:bg-white/30"
-            >
-              <Volume2 className="w-4 h-4 mr-2" />
-              Say "{selectedItem}"
-            </Button>
-            <Button
-              variant="outline"
-              className="bg-white/20 border-white/30 text-white hover:bg-white/30"
-            >
-              <Trophy className="w-4 h-4" />
-            </Button>
-          </div>
-        )}
+const Index = () => (
+  <main className="portfolio-shell">
+    <nav className="site-nav" aria-label="Main navigation">
+      <a className="brand" href="#top">SP<span>.</span></a>
+      <div className="nav-links">
+        <a href="#about">About</a>
+        <a href="#experience">Experience</a>
+        <a href="#projects">Projects</a>
       </div>
-    </header>
-  );
+      <a className="nav-contact" href="mailto:karthikpandian2003@gmail.com">Let's talk <ArrowUpRight size={16} /></a>
+    </nav>
 
-  const renderHome = () => (
-    <main className="min-h-screen bg-background">
-      {renderHeader()}
-      <LearningHome onModeChange={setCurrentMode} />
-    </main>
-  );
-
-  const renderAlphabet = () => (
-    <main className="min-h-screen bg-background">
-      {renderHeader()}
-      
-      <div className="max-w-6xl mx-auto p-8">
-        <div className="text-center mb-8">
-          <h2 className="text-3xl font-bold text-foreground mb-4">
-            Learn the English Alphabet 📖
-          </h2>
-          <p className="text-lg text-muted-foreground">
-            Click letters to learn, then practice writing them!
-          </p>
+    <section className="hero" id="top">
+      <div className="hero-copy">
+        <p className="eyebrow">Mechanical engineer · CAD/CAE designer</p>
+        <h1>Sendhur<br /><em>Pandian</em> M</h1>
+        <p className="hero-intro">I turn engineering challenges into thoughtful, manufacturable solutions — from simulation to shop floor.</p>
+        <div className="hero-actions">
+          <a className="button-primary" href="#projects">View my work <ArrowUpRight size={18} /></a>
+          <a className="text-link" href="mailto:karthikpandian2003@gmail.com">Get in touch <Mail size={16} /></a>
         </div>
-
-        {selectedItem && (
-          <div className="text-center mb-8 p-6 bg-card rounded-2xl shadow-soft">
-            <div className="text-8xl mb-4">{selectedItem}</div>
-            <p className="text-2xl font-semibold text-foreground">
-              Letter: {selectedItem}
-            </p>
-            <p className="text-lg text-muted-foreground">
-              Great choice! Keep learning!
-            </p>
-          </div>
-        )}
-
-        <AlphabetGrid onLetterClick={handleLetterClick} />
       </div>
-    </main>
-  );
+      <aside className="hero-card">
+        <p>Based in</p>
+        <strong>Tirunelveli,<br />Tamil Nadu</strong>
+        <span className="card-rule" />
+        <p>Available for</p>
+        <strong>Design · Manufacturing<br />· R&amp;D roles</strong>
+        <div className="availability"><i /> Open to relocation across India</div>
+      </aside>
+      <div className="hero-index">01 <span>/ 04</span></div>
+    </section>
 
-  const renderTamil = () => (
-    <main className="min-h-screen bg-background">
-      {renderHeader()}
-      
-      <div className="max-w-6xl mx-auto p-8">
-        <div className="text-center mb-8">
-          <h2 className="text-3xl font-bold text-foreground mb-4">
-            Learn Tamil Letters தமிழ் எழுத்துகள்
-          </h2>
-          <p className="text-lg text-muted-foreground">
-            Discover the beautiful Tamil writing system with interactive practice!
-          </p>
+    <section className="about-section" id="about">
+      <p className="section-number">01 — About me</p>
+      <div>
+        <h2>A curious engineer with a <em>practical</em> mindset.</h2>
+        <p className="about-copy">Mechanical Engineering graduate with hands-on expertise in SolidWorks, ANSYS, AutoCAD, Creo, and HFSS. I enjoy working at the intersection of analysis, design, and manufacturing to create solutions that perform in the real world.</p>
+        <div className="skills-wrap">
+          {skills.map((skill) => <span key={skill}>{skill}</span>)}
         </div>
-
-        {selectedItem && (
-          <div className="text-center mb-8 p-6 bg-card rounded-2xl shadow-soft">
-            <div className="text-8xl mb-4">{selectedItem}</div>
-            <p className="text-2xl font-semibold text-foreground">
-              Tamil Letter: {selectedItem}
-            </p>
-            <p className="text-lg text-muted-foreground">
-              Excellent! You're learning Tamil!
-            </p>
-          </div>
-        )}
-
-        <TamilGrid onLetterClick={handleLetterClick} />
       </div>
-    </main>
-  );
+    </section>
 
-  const renderShapes = () => (
-    <main className="min-h-screen bg-background">
-      {renderHeader()}
-      
-      <div className="max-w-6xl mx-auto p-8">
-        <div className="text-center mb-8">
-          <h2 className="text-3xl font-bold text-foreground mb-4">
-            Shapes & Words Adventure 🎯
-          </h2>
-          <p className="text-lg text-muted-foreground">
-            Learn shapes and the words that go with them!
-          </p>
-        </div>
-
-        {selectedItem && (
-          <div className="text-center mb-8 p-6 bg-card rounded-2xl shadow-soft">
-            <p className="text-2xl font-semibold text-foreground">
-              You selected: {selectedItem}! 🎉
-            </p>
-            <p className="text-lg text-muted-foreground">
-              Great job learning about shapes!
-            </p>
-          </div>
-        )}
-
-        <ShapeGame onShapeClick={handleShapeClick} />
+    <section className="experience-section" id="experience">
+      <div className="section-heading">
+        <p className="section-number">02 — Experience</p>
+        <h2>Learning by <em>doing.</em></h2>
       </div>
-    </main>
-  );
+      <div className="timeline">
+        {experience.map((item, index) => (
+          <article className="experience-item" key={item.role}>
+            <div className="experience-marker">0{index + 1}</div>
+            <div className="experience-main"><h3>{item.role}</h3><p className="company">{item.company}</p></div>
+            <p className="period">{item.period}</p>
+            <ul>{item.points.map((point) => <li key={point}>{point}</li>)}</ul>
+          </article>
+        ))}
+      </div>
+    </section>
 
-  switch (currentMode) {
-    case "alphabet":
-      return renderAlphabet();
-    case "tamil":
-      return renderTamil();
-    case "shapes":
-      return renderShapes();
-    default:
-      return renderHome();
-  }
-};
+    <section className="projects-section" id="projects">
+      <div className="section-heading"><p className="section-number">03 — Selected projects</p><h2>Ideas built to <em>perform.</em></h2></div>
+      <div className="projects-grid">
+        {projects.map((project, index) => (
+          <article className={`project-card project-${index + 1}`} key={project.title}>
+            <div className="project-top"><span>0{index + 1}</span><span>{project.label}</span></div>
+            <div><h3>{project.title}</h3><p className="project-subtitle">{project.subtitle}</p><p className="project-description">{project.description}</p></div>
+            <span className="project-arrow"><ArrowUpRight size={22} /></span>
+          </article>
+        ))}
+      </div>
+    </section>
+
+    <section className="credentials-section">
+      <div><p className="section-number">04 — Credentials</p><h2>Prepared to<br /><em>contribute.</em></h2></div>
+      <div className="credentials-content">
+        <div className="education"><GraduationCap size={26} /><div><p className="detail-label">Education</p><h3>B.E. Mechanical Engineering</h3><p>National Engineering College, Kovilpatti</p><small>2022—2026 · CGPA: 6.92</small></div></div>
+        <div className="certifications"><Award size={26} /><div><p className="detail-label">Certifications</p>{certifications.map((certification) => <p key={certification}>{certification}</p>)}</div></div>
+      </div>
+    </section>
+
+    <footer className="site-footer">
+      <div><p className="footer-kicker">Have a project in mind?</p><h2>Let's make it <em>real.</em></h2></div>
+      <div className="footer-contact">
+        <a href="mailto:karthikpandian2003@gmail.com"><Mail size={17} /> karthikpandian2003@gmail.com</a>
+        <a href="tel:+916380772530"><Phone size={17} /> +91 63807 72530</a>
+        <a href="https://www.linkedin.com/in/sendhur-pandian-ba450627a" target="_blank" rel="noreferrer"><Linkedin size={17} /> LinkedIn</a>
+      </div>
+      <p className="footer-note"><MapPin size={14} /> Tamil (Native) · English (Professional)</p>
+    </footer>
+  </main>
+);
 
 export default Index;
