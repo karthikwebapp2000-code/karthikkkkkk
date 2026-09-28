@@ -2,20 +2,24 @@ import { useEffect, useRef, useState } from 'react';
 import './Header.css';
 
 export default function Header() {
-  const [navHidden, setNavHidden] = useState(false);
+  const [navVisible, setNavVisible] = useState(true);
   const lastScrollY = useRef(0);
 
   useEffect(() => {
     const handleScroll = () => {
       const currentScrollY = window.scrollY;
-      // Hide nav when scrolling down, show when scrolling up
-      if (currentScrollY > lastScrollY.current && currentScrollY > 100) {
-        setNavHidden(true);
+      const isScrollingDown = currentScrollY > lastScrollY.current;
+      
+      // Hide nav when scrolling down past 100px, show when scrolling up
+      if (isScrollingDown && currentScrollY > 100) {
+        setNavVisible(false);
       } else {
-        setNavHidden(false);
+        setNavVisible(true);
       }
+      
       lastScrollY.current = currentScrollY;
     };
+
     window.addEventListener('scroll', handleScroll, { passive: true });
     return () => window.removeEventListener('scroll', handleScroll);
   }, []);
@@ -23,11 +27,16 @@ export default function Header() {
   return (
     <header className="header">
       <div className="header-content">
-        <a className="name-title" href="#home" aria-label="Karthik - Go to home">Karthik<span>.</span></a>
-        <nav className={`nav-menu ${navHidden ? 'hidden' : 'visible'}`} aria-label="Main navigation">
+        {/* Name always visible */}
+        <a href="#home" className="name-title">
+          Karthik<span>.</span>
+        </a>
+        
+        {/* Navigation hides on scroll */}
+        <nav className={`nav-menu ${navVisible ? 'show' : 'hide'}`}>
           <a href="#home">Home</a>
           <a href="#profile">About</a>
-          <a href="#github-log">GitHub log</a>
+          <a href="#github-log">GitHub</a>
         </nav>
       </div>
     </header>
