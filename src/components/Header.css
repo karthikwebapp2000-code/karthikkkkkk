@@ -1,4 +1,4 @@
-/* Header Fixed Bar */
+/* Header Fixed Bar - Always Visible */
 .header {
   position: fixed;
   top: 0;
@@ -10,6 +10,8 @@
   backdrop-filter: blur(16px);
   height: 70px;
   padding: 0;
+  /* Header always stays visible */
+  transform: translateY(0);
 }
 
 .header-content {
@@ -22,7 +24,7 @@
   justify-content: space-between;
 }
 
-/* Name Title - Always Visible */
+/* Name Title - ALWAYS VISIBLE - NEVER HIDES */
 .name-title {
   color: #fff;
   font-size: 1.3rem;
@@ -32,6 +34,9 @@
   white-space: nowrap;
   z-index: 1001;
   animation: slideInName 0.6s ease-out;
+  /* Name stays visible at all times */
+  opacity: 1;
+  visibility: visible;
 }
 
 .name-title span {
@@ -43,7 +48,7 @@
   color: #ffa500;
 }
 
-/* Navigation Menu - Hides on Scroll */
+/* Navigation Menu - Only This Hides on Scroll */
 .nav-menu {
   display: flex;
   gap: 2rem;
@@ -62,6 +67,7 @@
 .nav-menu.show {
   opacity: 1;
   transform: translateY(0);
+  pointer-events: auto;
 }
 
 .nav-menu a {

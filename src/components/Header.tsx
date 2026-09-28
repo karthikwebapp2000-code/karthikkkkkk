@@ -27,12 +27,12 @@ export default function Header() {
   return (
     <header className="header">
       <div className="header-content">
-        {/* Name always visible */}
+        {/* Name ALWAYS visible - never hides */}
         <a href="#home" className="name-title">
           Karthik<span>.</span>
         </a>
         
-        {/* Navigation hides on scroll */}
+        {/* Navigation hides on scroll down */}
         <nav className={`nav-menu ${navVisible ? 'show' : 'hide'}`}>
           <a href="#home">Home</a>
           <a href="#profile">About</a>
