@@ -19,24 +19,24 @@ main { max-width: 1180px; margin: 0 auto; padding: 7rem 2rem 3rem; }
 .hero h1 { font-size: clamp(4rem, 13vw, 9rem); line-height: .9; letter-spacing: -.08em; margin: 0; color: #fff; }
 .hero h1 span { color: #a78bfa; }
 .hero-copy { color: #aab5cf; font-size: clamp(1.1rem, 2vw, 1.35rem); line-height: 1.7; max-width: 520px; margin: 2rem 0; }
-.primary-button { text-decoration: none; font-weight: 700; align-self: flex-start; background: linear-gradient(135deg, #8b7cf6 0%, #a78bfa 100%); border-radius: 999px; padding: .9rem 1.3rem; color: #0b1020; transition: transform .2s, background .2s, box-shadow .2s; border: none; cursor: pointer; box-shadow: 0 8px 24px rgba(139, 124, 246, 0.3); }
-.primary-button:hover { transform: translateY(-3px); background: linear-gradient(135deg, #a78bfa 0%, #c2a9ff 100%); box-shadow: 0 12px 32px rgba(139, 124, 246, 0.5); }
+.primary-button { text-decoration: none; font-weight: 700; align-self: flex-start; background: linear-gradient(135deg, #8b7cf6 0%, #a78bfa 100%); border-radius: 999px; padding: .9rem 1.3rem; color: #0b1020; transition: transform .25s ease, background .25s ease, box-shadow .25s ease; border: none; cursor: pointer; box-shadow: 0 6px 18px rgba(139, 124, 246, 0.2); }
+.primary-button:hover { transform: translateY(-2px); background: linear-gradient(135deg, #a78bfa 0%, #c2a9ff 100%); box-shadow: 0 9px 24px rgba(139, 124, 246, 0.3); }
 
 /* Profile Section */
 .profile-section { padding: 6rem 0; scroll-margin-top: 6rem; }
 .profile-container { display: grid; grid-template-columns: 1fr 1fr; gap: 4rem; align-items: center; }
 .profile-image-wrapper { display: flex; align-items: center; justify-content: center; }
-.oil-tank-container { width: 100%; max-width: 300px; aspect-ratio: 1; position: relative; animation: floatUp 3s ease-in-out infinite; }
-.refinery-tank { width: 100%; height: 100%; filter: drop-shadow(0 20px 40px rgba(139, 124, 246, 0.3)); }
-@keyframes floatUp { 0%, 100% { transform: translateY(0); } 50% { transform: translateY(-20px); } }
+.oil-tank-container { width: 100%; max-width: 300px; aspect-ratio: 1; position: relative; animation: floatUp 6s ease-in-out infinite; }
+.refinery-tank { width: 100%; height: 100%; filter: drop-shadow(0 12px 24px rgba(139, 124, 246, 0.18)); }
+@keyframes floatUp { 0%, 100% { transform: translateY(0); } 50% { transform: translateY(-8px); } }
 
 .profile-content h2 { font-size: clamp(2rem, 5vw, 3.2rem); margin: 0 0 0.5rem; color: #fff; letter-spacing: -.05em; }
 .profile-content h2 span { color: #ffa500; }
 .profile-role { color: #ffa500; font-weight: 700; font-size: 1.1rem; margin: 0 0 1rem; text-transform: uppercase; letter-spacing: .1em; }
 .profile-bio { color: #aab5cf; font-size: 1rem; line-height: 1.8; margin: 0 0 2rem; }
 .profile-stats { display: grid; grid-template-columns: repeat(3, 1fr); gap: 1.5rem; margin-top: 2rem; }
-.stat { text-align: center; padding: 1rem; border-radius: 12px; background: rgba(139, 124, 246, 0.1); border: 1px solid rgba(139, 124, 246, 0.2); transition: all .3s ease; }
-.stat:hover { background: rgba(139, 124, 246, 0.15); border-color: rgba(139, 124, 246, 0.4); transform: translateY(-4px); }
+.stat { text-align: center; padding: 1rem; border-radius: 12px; background: rgba(139, 124, 246, 0.1); border: 1px solid rgba(139, 124, 246, 0.2); transition: background .25s ease, border-color .25s ease, transform .25s ease; }
+.stat:hover { background: rgba(139, 124, 246, 0.13); border-color: rgba(139, 124, 246, 0.3); transform: translateY(-2px); }
 .stat-value { display: block; font-size: 1.8rem; font-weight: 800; color: #ffa500; margin-bottom: 0.5rem; }
 .stat-label { display: block; font-size: 0.85rem; color: #8995b4; text-transform: uppercase; letter-spacing: .08em; }
 
@@ -44,12 +44,12 @@ main { max-width: 1180px; margin: 0 auto; padding: 7rem 2rem 3rem; }
 .github-log { padding: 4rem 0 7rem; scroll-margin-top: 6rem; }
 .section-heading { display: flex; align-items: end; justify-content: space-between; gap: 1rem; margin-bottom: 2rem; }
 .section-heading h2 { font-size: clamp(2rem, 5vw, 3.6rem); margin: 0; letter-spacing: -.06em; color: #fff; }
-.github-link { text-decoration: none; font-weight: 700; color: #ffa500; white-space: nowrap; transition: all .3s ease; padding: 0.5rem 1rem; border-radius: 6px; border: 1px solid rgba(255, 165, 0, 0.3); }
+.github-link { text-decoration: none; font-weight: 700; color: #ffa500; white-space: nowrap; transition: all .25s ease; padding: 0.5rem 1rem; border-radius: 6px; border: 1px solid rgba(255, 165, 0, 0.3); }
 .github-link:hover { background: rgba(255, 165, 0, 0.1); border-color: rgba(255, 165, 0, 0.6); }
 
 .commit-list { border-top: 1px solid #293452; }
-.commit-item { display: flex; align-items: center; gap: 1rem; padding: 1.2rem .5rem; border-bottom: 1px solid #293452; text-decoration: none; transition: all .3s ease; border-left: 3px solid transparent; padding-left: calc(.5rem - 3px); }
-.commit-item:hover { background: rgba(139, 124, 246, 0.1); padding-left: 1rem; border-left-color: #ffa500; }
+.commit-item { display: flex; align-items: center; gap: 1rem; padding: 1.2rem .5rem; border-bottom: 1px solid #293452; text-decoration: none; transition: background .25s ease, padding-left .25s ease, border-color .25s ease; border-left: 3px solid transparent; }
+.commit-item:hover { background: rgba(139, 124, 246, 0.07); padding-left: .8rem; border-left-color: #ffa500; }
 .commit-dot { width: .65rem; height: .65rem; border: 2px solid #ffa500; border-radius: 50%; flex: 0 0 auto; }
 .commit-details { display: flex; flex: 1; min-width: 0; flex-direction: column; gap: .35rem; }
 .commit-details strong { color: #f4f6ff; overflow: hidden; text-overflow: ellipsis; white-space: nowrap; }
@@ -60,6 +60,11 @@ main { max-width: 1180px; margin: 0 auto; padding: 7rem 2rem 3rem; }
 .error { color: #f4a8bb; }
 
 footer { color: #697895; border-top: 1px solid #202b45; padding: 2rem; text-align: center; font-size: .85rem; }
+
+@media (prefers-reduced-motion: reduce) {
+  html { scroll-behavior: auto; }
+  *, *::before, *::after { animation-duration: 0.01ms !important; animation-iteration-count: 1 !important; transition-duration: 0.01ms !important; }
+}
 
 /* Responsive Design */
 @media (max-width: 768px) {
