@@ -8,6 +8,7 @@ export default function Header() {
   useEffect(() => {
     const handleScroll = () => {
       const currentScrollY = window.scrollY;
+      // Keep header visible, but hide nav on scroll (name always shows)
       setIsVisible(currentScrollY < 80 || currentScrollY < lastScrollY.current);
       lastScrollY.current = currentScrollY;
     };
@@ -18,7 +19,7 @@ export default function Header() {
   return (
     <header className={`header ${isVisible ? 'visible' : 'hidden'}`}>
       <div className="header-content">
-        <a className="name-title" href="#home">Karthik<span>.</span></a>
+        <a className="name-title" href="#home" aria-label="Karthik - Go to home">Karthik<span>.</span></a>
         <nav className="nav-menu" aria-label="Main navigation">
           <a href="#home">Home</a>
           <a href="#github-log">GitHub log</a>

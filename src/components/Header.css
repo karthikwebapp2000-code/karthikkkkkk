@@ -1,10 +1,13 @@
-.header { position: fixed; inset: 0 0 auto; z-index: 1000; background: rgba(11, 16, 32, .78); border-bottom: 1px solid rgba(145, 167, 255, .12); backdrop-filter: blur(16px); transition: transform .3s ease, opacity .3s ease; }
+.header { position: fixed; inset: 0 0 auto; z-index: 1000; background: rgba(11, 16, 32, .85); border-bottom: 1px solid rgba(145, 167, 255, .12); backdrop-filter: blur(16px); transition: transform .3s ease, opacity .3s ease; padding: 1rem 0; }
 .header.visible { transform: translateY(0); opacity: 1; }
-.header.hidden { transform: translateY(-110%); opacity: 0; }
-.header-content { max-width: 1180px; margin: auto; padding: 1rem 2rem; display: flex; align-items: center; justify-content: space-between; }
-.name-title { color: #fff; font-size: 1.25rem; font-weight: 800; letter-spacing: -.04em; text-decoration: none; }
+.header.hidden { transform: translateY(-100%); opacity: 0; }
+.header-content { max-width: 1180px; margin: auto; padding: 0 2rem; display: flex; align-items: center; justify-content: space-between; }
+.name-title { color: #fff; font-size: 1.3rem; font-weight: 800; letter-spacing: -.04em; text-decoration: none; position: relative; z-index: 1001; animation: slideInName 0.5s ease-out; }
 .name-title span { color: #a78bfa; }
 .nav-menu { display: flex; align-items: center; gap: 1.5rem; }
-.nav-menu a { color: #aab5cf; font-size: .9rem; text-decoration: none; transition: color .2s; }
+.nav-menu a { color: #aab5cf; font-size: .9rem; text-decoration: none; transition: color .2s; position: relative; }
+.nav-menu a::after { content: ''; position: absolute; bottom: -4px; left: 0; width: 0; height: 2px; background: #a78bfa; transition: width .3s ease; }
 .nav-menu a:hover { color: #fff; }
-@media (max-width: 650px) { .header-content { padding-inline: 1.2rem; } .nav-menu { gap: .8rem; } }
+.nav-menu a:hover::after { width: 100%; }
+@keyframes slideInName { from { opacity: 0; transform: translateX(-20px); } to { opacity: 1; transform: translateX(0); } }
+@media (max-width: 650px) { .header-content { padding: 0 1.2rem; } .nav-menu { gap: .8rem; } .nav-menu a { font-size: .8rem; } }
