@@ -109,24 +109,51 @@ export default function App() {
       <Header />
       <main className="page-shell">
         <section className="hero" id="home">
-          <div className="hero-badge glass-pill">Available for select work</div>
-          <div className="hero-copy-block">
-            <p className="eyebrow reveal-up">Hello, I’m</p>
-            <h1 className="reveal-up">
-              Karthik<span>.</span>
-            </h1>
-            <p className="hero-copy reveal-up">
-              I design and build fast, elegant web experiences that feel modern, human, and measurable.
-            </p>
-          </div>
+          <div className="hero-orb orb-one" aria-hidden="true" />
+          <div className="hero-orb orb-two" aria-hidden="true" />
 
-          <div className="hero-actions reveal-up">
-            <a href="#profile" className="primary-button glass-button">
-              About me
-            </a>
-            <a href="#github-log" className="secondary-button glass-button ghost">
-              GitHub log
-            </a>
+          <div className="hero-badge glass-pill">Available for select work</div>
+
+          <div className="hero-grid">
+            <div className="hero-copy-block">
+              <p className="eyebrow reveal-up">Hello, I’m</p>
+              <h1 className="reveal-up">
+                Karthik<span>.</span>
+              </h1>
+              <p className="hero-copy reveal-up">
+                I design and build fast, elegant web experiences that feel modern, human, and measurable.
+              </p>
+
+              <div className="hero-actions reveal-up">
+                <a href="#profile" className="primary-button glass-button">
+                  About me
+                </a>
+                <a href="#github-log" className="secondary-button glass-button ghost">
+                  GitHub log
+                </a>
+              </div>
+            </div>
+
+            <div className="hero-visual reveal-up">
+              <div className="visual-core glass-card">
+                <div className="visual-label">Product design + engineering</div>
+                <div className="visual-ring">
+                  <div className="visual-center">
+                    <span>UX</span>
+                  </div>
+                </div>
+                <div className="visual-metrics">
+                  <div>
+                    <strong>React</strong>
+                    <small>UI systems</small>
+                  </div>
+                  <div>
+                    <strong>TS</strong>
+                    <small>Clean architecture</small>
+                  </div>
+                </div>
+              </div>
+            </div>
           </div>
 
           <div className="hero-panel glass-card reveal-up">
@@ -182,48 +209,3 @@ export default function App() {
     </>
   );
 }
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
