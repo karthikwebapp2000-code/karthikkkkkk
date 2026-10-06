@@ -1,8 +1,229 @@
-* { box-sizing: border-box; }
-:root { color: #e8edf7; background: #0b1020; font-family: Inter, ui-sans-serif, system-ui, sans-serif; font-synthesis: none; }
-html { scroll-behavior: smooth; } body { margin: 0; min-width: 320px; background: radial-gradient(circle at 80% 10%, #202b58 0, #0b1020 42%); } a { color: inherit; }
-main { max-width: 1180px; margin: 0 auto; padding: 7rem 2rem 3rem; }
-.hero { min-height: 72vh; display: flex; flex-direction: column; justify-content: center; max-width: 720px; }.eyebrow { color: #91a7ff; text-transform: uppercase; letter-spacing: .16em; font-size: .75rem; font-weight: 700; margin: 0 0 1rem; }.hero h1 { font-size: clamp(4rem, 13vw, 9rem); line-height: .9; letter-spacing: -.08em; margin: 0; color: #fff; }.hero h1 span, .profile-copy h2 span { color: #a78bfa; }.hero-copy { color: #aab5cf; font-size: clamp(1.1rem, 2vw, 1.35rem); line-height: 1.7; max-width: 520px; margin: 2rem 0; }.primary-button, .github-link { text-decoration: none; font-weight: 700; }.primary-button { align-self: flex-start; background: #8b7cf6; border-radius: 999px; padding: .9rem 1.3rem; color: #0b1020; transition: transform .2s, background .2s; }.primary-button:hover { transform: translateY(-3px); background: #b1a6ff; }
-.profile { display: grid; grid-template-columns: minmax(260px, 420px) 1fr; align-items: center; gap: clamp(2rem, 8vw, 7rem); padding: 5rem 0 7rem; scroll-margin-top: 6rem; }.profile-photo-frame { width: min(100%, 420px); aspect-ratio: 3 / 4; padding: .6rem; border: 1px solid rgba(167, 139, 250, .5); border-radius: 1.5rem; background: linear-gradient(145deg, rgba(167, 139, 250, .3), rgba(11, 16, 32, .4)); box-shadow: 0 24px 70px rgba(0, 0, 0, .35); overflow: hidden; }.profile-photo { display: block; width: 100%; height: 100%; object-fit: cover; border-radius: 1rem; }.profile-copy h2 { color: #fff; font-size: clamp(2.3rem, 6vw, 5rem); line-height: 1; letter-spacing: -.07em; margin: 0 0 1.2rem; }.profile-copy > p:last-child { max-width: 500px; color: #aab5cf; font-size: 1.1rem; line-height: 1.8; }
-.github-log { padding: 2rem 0 7rem; scroll-margin-top: 6rem; }.section-heading { display: flex; align-items: end; justify-content: space-between; gap: 1rem; margin-bottom: 1.5rem; }.section-heading h2 { font-size: clamp(2rem, 5vw, 3.6rem); margin: 0; letter-spacing: -.06em; color: #fff; }.github-link { color: #b8b1ff; white-space: nowrap; }.commit-list { border-top: 1px solid #293452; }.commit-item { display: flex; align-items: center; gap: 1rem; padding: 1.2rem .5rem; border-bottom: 1px solid #293452; text-decoration: none; transition: background .2s, padding .2s; }.commit-item:hover { background: #151d36; padding-left: 1rem; }.commit-dot { width: .65rem; height: .65rem; border: 2px solid #8b7cf6; border-radius: 50%; flex: 0 0 auto; }.commit-details { display: flex; flex: 1; min-width: 0; flex-direction: column; gap: .35rem; }.commit-details strong { color: #f4f6ff; overflow: hidden; text-overflow: ellipsis; white-space: nowrap; }.commit-details span, .commit-sha, .log-message { color: #8995b4; font-size: .88rem; }.commit-sha { white-space: nowrap; }.log-message { padding: 2rem 0; }.error { color: #f4a8bb; } footer { color: #697895; border-top: 1px solid #202b45; padding: 2rem; text-align: center; font-size: .85rem; }
-@media (max-width: 700px) { main { padding-inline: 1.2rem; }.profile { grid-template-columns: 1fr; padding-top: 3rem; }.profile-photo-frame { max-width: 340px; margin: 0 auto; }.section-heading { align-items: start; flex-direction: column; }.commit-sha { display: none; } }
+import { useEffect, useState } from 'react';
+import Header from './components/Header';
+import './App.css';
+
+type GitHubCommit = {
+  sha: string;
+  html_url: string;
+  commit: {
+    message: string;
+    author: { name: string; date: string } | null;
+  };
+};
+
+const repository = 'karthikwebapp2000-code/karthikwebapp';
+
+const featureHighlights = [
+  {
+    title: 'Product Design',
+    text: 'Clean interfaces, polished flows, and premium visual systems that feel effortless.',
+  },
+  {
+    title: 'Full-Stack Builds',
+    text: 'From frontend polish to reliable backend logic, I build complete product experiences.',
+  },
+  {
+    title: 'Performance Focus',
+    text: 'Fast, responsive experiences optimized for users, conversion, and long-term scale.',
+  },
+];
+
+function Profile() {
+  return (
+    <section className="profile glass-panel" id="profile" aria-labelledby="profile-title">
+      <div className="profile-photo-frame glass-card">
+        <img
+          className="profile-photo"
+          src="/portrait-sendhur-pandian-m.jpg"
+          alt="Portrait of Sendhur Pandian M"
+        />
+      </div>
+      <div className="profile-copy">
+        <p className="eyebrow">About me</p>
+        <h2 id="profile-title">Sendhur Pandian M<span>.</span></h2>
+        <p>
+          Full-stack developer building modern, reliable web experiences with TypeScript, React,
+          and design-focused engineering.
+        </p>
+      </div>
+    </section>
+  );
+}
+
+function GitHubLog() {
+  const [commits, setCommits] = useState<GitHubCommit[]>([]);
+  const [loading, setLoading] = useState(true);
+  const [error, setError] = useState('');
+
+  useEffect(() => {
+    fetch(`https://api.github.com/repos/${repository}/commits?per_page=5`)
+      .then((response) => {
+        if (!response.ok) throw new Error('GitHub activity could not be loaded.');
+        return response.json();
+      })
+      .then(setCommits)
+      .catch((requestError: unknown) =>
+        setError(requestError instanceof Error ? requestError.message : 'Unable to load GitHub activity.')
+      )
+      .finally(() => setLoading(false));
+  }, []);
+
+  return (
+    <section className="github-log" id="github-log" aria-labelledby="github-log-title">
+      <div className="section-heading">
+        <div>
+          <p className="eyebrow">Open source activity</p>
+          <h2 id="github-log-title">GitHub log</h2>
+        </div>
+        <a className="github-link" href={`https://github.com/${repository}`} target="_blank" rel="noreferrer">
+          View repository ↗
+        </a>
+      </div>
+      {loading && <p className="log-message">Loading the latest commits…</p>}
+      {error && <p className="log-message error">{error}</p>}
+      {!loading && !error && commits.length === 0 && <p className="log-message">No commits found yet.</p>}
+      {!loading && !error && commits.length > 0 && (
+        <div className="commit-list">
+          {commits.map((item) => (
+            <a className="commit-item glass-card" href={item.html_url} key={item.sha} target="_blank" rel="noreferrer">
+              <span className="commit-dot" aria-hidden="true" />
+              <span className="commit-details">
+                <strong>{item.commit.message.split('\n')[0]}</strong>
+                <span>
+                  {item.commit.author?.name ?? 'Unknown author'} ·{' '}
+                  {item.commit.author?.date ? new Date(item.commit.author.date).toLocaleDateString() : 'Unknown date'}
+                </span>
+              </span>
+              <span className="commit-sha">{item.sha.slice(0, 7)} ↗</span>
+            </a>
+          ))}
+        </div>
+      )}
+    </section>
+  );
+}
+
+export default function App() {
+  return (
+    <>
+      <Header />
+      <main className="page-shell">
+        <section className="hero" id="home">
+          <div className="hero-badge glass-pill">Available for select work</div>
+          <div className="hero-copy-block">
+            <p className="eyebrow reveal-up">Hello, I’m</p>
+            <h1 className="reveal-up">
+              Karthik<span>.</span>
+            </h1>
+            <p className="hero-copy reveal-up">
+              I design and build fast, elegant web experiences that feel modern, human, and measurable.
+            </p>
+          </div>
+
+          <div className="hero-actions reveal-up">
+            <a href="#profile" className="primary-button glass-button">
+              About me
+            </a>
+            <a href="#github-log" className="secondary-button glass-button ghost">
+              GitHub log
+            </a>
+          </div>
+
+          <div className="hero-panel glass-card reveal-up">
+            <div className="panel-head">
+              <span className="status-dot" />
+              <span>Currently building</span>
+            </div>
+            <p>High-impact digital products with premium UX and maintainable code.</p>
+          </div>
+
+          <div className="hero-stats reveal-up">
+            <div className="glass-card stat-card">
+              <strong>4+</strong>
+              <span>Years building</span>
+            </div>
+            <div className="glass-card stat-card">
+              <strong>20+</strong>
+              <span>Interfaces shipped</span>
+            </div>
+            <div className="glass-card stat-card">
+              <strong>100%</strong>
+              <span>Product focus</span>
+            </div>
+          </div>
+        </section>
+
+        <section className="feature-section" aria-label="Key strengths">
+          <div className="section-heading">
+            <div>
+              <p className="eyebrow">Capabilities</p>
+              <h2>What I bring</h2>
+            </div>
+          </div>
+
+          <div className="feature-grid">
+            {featureHighlights.map((feature, index) => (
+              <article
+                key={feature.title}
+                className="feature-card glass-card"
+                style={{ animationDelay: `${index * 120}ms` }}
+              >
+                <div className="feature-icon">0{index + 1}</div>
+                <h3>{feature.title}</h3>
+                <p>{feature.text}</p>
+              </article>
+            ))}
+          </div>
+        </section>
+
+        <Profile />
+        <GitHubLog />
+      </main>
+    </>
+  );
+}
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+

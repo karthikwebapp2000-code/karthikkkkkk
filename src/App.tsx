@@ -1,77 +1,207 @@
-import { useEffect, useState } from 'react';
-import Header from './components/Header';
-import './App.css';
-
-type GitHubCommit = {
-  sha: string;
-  html_url: string;
-  commit: {
-    message: string;
-    author: { name: string; date: string } | null;
-  };
-};
-
-const repository = 'karthikwebapp2000-code/karthikwebapp';
-
-function Profile() {
-  return (
-    <section className="profile" id="profile" aria-labelledby="profile-title">
-      <div className="profile-photo-frame">
-        <img
-          className="profile-photo"
-          src="/portrait-sendhur-pandian-m.jpg"
-          alt="Portrait of Sendhur Pandian M"
-        />
-      </div>
-      <div className="profile-copy">
-        <p className="eyebrow">About me</p>
-        <h2 id="profile-title">Sendhur Pandian M<span>.</span></h2>
-        <p>Full-stack developer building modern, reliable web experiences with TypeScript and React.</p>
-      </div>
-    </section>
-  );
+/* Header Fixed Bar - Always Visible */
+.header {
+  position: fixed;
+  top: 0;
+  left: 0;
+  right: 0;
+  z-index: 1000;
+  background: rgba(8, 12, 20, 0.42);
+  border-bottom: 1px solid rgba(180, 197, 255, 0.14);
+  backdrop-filter: blur(18px);
+  -webkit-backdrop-filter: blur(18px);
+  height: 72px;
+  padding: 0;
+  box-shadow: 0 10px 40px rgba(0, 0, 0, 0.15);
 }
 
-function GitHubLog() {
-  const [commits, setCommits] = useState<GitHubCommit[]>([]);
-  const [loading, setLoading] = useState(true);
-  const [error, setError] = useState('');
-
-  useEffect(() => {
-    fetch(`https://api.github.com/repos/${repository}/commits?per_page=5`)
-      .then((response) => {
-        if (!response.ok) throw new Error('GitHub activity could not be loaded.');
-        return response.json();
-      })
-      .then(setCommits)
-      .catch((requestError: unknown) => setError(requestError instanceof Error ? requestError.message : 'Unable to load GitHub activity.'))
-      .finally(() => setLoading(false));
-  }, []);
-
-  return (
-    <section className="github-log" id="github-log" aria-labelledby="github-log-title">
-      <div className="section-heading">
-        <div><p className="eyebrow">Open source activity</p><h2 id="github-log-title">GitHub log</h2></div>
-        <a className="github-link" href={`https://github.com/${repository}`} target="_blank" rel="noreferrer">View repository ↗</a>
-      </div>
-      {loading && <p className="log-message">Loading the latest commits…</p>}
-      {error && <p className="log-message error">{error}</p>}
-      {!loading && !error && commits.length === 0 && <p className="log-message">No commits found yet.</p>}
-      {!loading && !error && commits.length > 0 && (
-        <div className="commit-list">
-          {commits.map((item) => (
-            <a className="commit-item" href={item.html_url} key={item.sha} target="_blank" rel="noreferrer">
-              <span className="commit-dot" aria-hidden="true" />
-              <span className="commit-details"><strong>{item.commit.message.split('\n')[0]}</strong><span>{item.commit.author?.name ?? 'Unknown author'} · {item.commit.author?.date ? new Date(item.commit.author.date).toLocaleDateString() : 'recently'}</span></span>
-              <span className="commit-sha">{item.sha.slice(0, 7)} ↗</span>
-            </a>
-          ))}
-        </div>
-      )}
-    </section>
-  );
+.header-content {
+  max-width: 1180px;
+  margin: 0 auto;
+  padding: 0 2rem;
+  height: 100%;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
 }
 
-export default function App() {
-  return <><Header /><main><section className="hero" id="home"><p className="eyebrow">Hello, I’m</p><h1>Karthik<span>.</span></h1><p className="hero-copy">Full-stack developer crafting performant web applications.</p><a className="primary-button" href="#profile">View my profile ↓</a></section><Profile /><GitHubLog /></main><footer>© {new Date().getFullYear()} Sendhur Pandian M · Built with React and TypeScript</footer></>;
+.name-title {
+  color: #ffffff;
+  font-size: 1.3rem;
+  font-weight: 800;
+  letter-spacing: -0.04em;
+  text-decoration: none;
+  white-space: nowrap;
+  z-index: 1001;
+  animation: slideInName 0.45s ease-out;
+  opacity: 1;
+  visibility: visible;
+  transition: color 0.25s ease;
 }
+
+.name-title span {
+  color: #ffb84d;
+  font-weight: 900;
+}
+
+.name-title:hover {
+  color: #a9c5ff;
+}
+
+.nav-menu {
+  display: flex;
+  gap: 0.6rem;
+  align-items: center;
+  transition: opacity 0.25s ease-in-out, transform 0.25s ease-in-out;
+  opacity: 1;
+  transform: translateY(0);
+}
+
+.nav-menu.hide {
+  opacity: 0;
+  transform: translateY(-6px);
+  pointer-events: none;
+}
+
+.nav-menu.show {
+  opacity: 1;
+  transform: translateY(0);
+  pointer-events: auto;
+}
+
+.nav-menu a {
+  color: rgba(232, 239, 255, 0.82);
+  text-decoration: none;
+  font-size: 0.92rem;
+  font-weight: 500;
+  transition: color 0.25s ease, background 0.25s ease;
+  position: relative;
+  padding: 0.65rem 0.85rem;
+  border-radius: 999px;
+}
+
+.nav-menu a:hover {
+  color: #ffffff;
+  background: rgba(255, 255, 255, 0.06);
+}
+
+@keyframes slideInName {
+  from {
+    opacity: 0;
+    transform: translateX(-12px);
+  }
+  to {
+    opacity: 1;
+    transform: translateX(0);
+  }
+}
+
+@media (max-width: 768px) {
+  .header-content {
+    padding: 0 1.2rem;
+  }
+
+  .name-title {
+    font-size: 1.1rem;
+  }
+
+  .nav-menu {
+    gap: 0.5rem;
+  }
+
+  .nav-menu a {
+    font-size: 0.8rem;
+    padding: 0.45rem 0.65rem;
+  }
+}
+
+@media (max-width: 650px) {
+  .header-content {
+    padding: 0 1rem;
+  }
+
+  .name-title {
+    font-size: 1rem;
+  }
+
+  .nav-menu a {
+    font-size: 0.75rem;
+    padding: 0.35rem 0.5rem;
+  }
+}
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
